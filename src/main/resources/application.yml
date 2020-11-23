@@ -6,8 +6,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://123.56.152.42:27017/app
-  security:
-    user:
-      name: user1
-      password: 111111
+#  security:
+#    user:
+#      name: user1
+#      password: 111111
 
