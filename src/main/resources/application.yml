@@ -1,0 +1,13 @@
+server:
+  port: 8088
+spring:
+  profiles:
+    active: 8081
+  data:
+    mongodb:
+      uri: mongodb://123.56.152.42:27017/app
+  security:
+    user:
+      name: user1
+      password: 111111
+
