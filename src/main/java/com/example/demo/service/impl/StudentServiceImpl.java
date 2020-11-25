@@ -1,8 +1,8 @@
-package com.example.demo.server.impl;
+package com.example.demo.service.impl;
 
 import com.example.demo.dao.MongoDao;
 import com.example.demo.entity.MongoTest;
-import com.example.demo.server.StudentServer;
+import com.example.demo.service.StudentService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName StudentServerImpl
@@ -22,13 +25,13 @@ import java.util.List;
  * @Version V1.0
  **/
 @Service
-public class StudentServerImpl implements StudentServer {
+public class StudentServiceImpl implements StudentService {
     @Autowired
     MongoDao mongoDao;
     @Override
     public void down(Integer id, HttpServletResponse response) {
         //文件名称
-        String excelName ="下载测试.xlsx";
+        String excelName ="test.xlsx";
         //创建excel工作空间
         XSSFWorkbook xssfWorkbook =new XSSFWorkbook();
         //创建sheet
@@ -68,4 +71,14 @@ public class StudentServerImpl implements StudentServer {
             System.out.println("download qywx excel error:{}"+e);
         }
     }
+
+    @Override
+    public Map<Integer, MongoTest> fingMap() {
+        Integer id =null;
+        List<MongoTest>  list  = mongoDao.findTestById(id);
+        Map<Integer,MongoTest> map =list.stream().collect(Collectors.toMap(MongoTest::getId, Function.identity()));
+
+        return map;
+    }
+
 }

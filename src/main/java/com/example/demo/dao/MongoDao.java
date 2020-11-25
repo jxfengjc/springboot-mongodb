@@ -85,6 +85,15 @@ public class MongoDao {
         Query query=new Query(Criteria.where("id").is(id));
         mongoTemplate.remove(query,MongoTest.class,"student");
     }
+    public List<MongoTest> testAL(){
 
+
+        return null;
+    }
+
+
+    public static void main(String[] args) {
+
+    }
 
 }

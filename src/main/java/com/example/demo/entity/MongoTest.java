@@ -109,5 +109,25 @@ public class MongoTest {
 
     public void setHobbyCode(String hobbyCode) {
         this.hobbyCode = hobbyCode;
+
+
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("MongoTest{");
+        sb.append("id=").append(id);
+        sb.append(", number=").append(number);
+        sb.append(", age=").append(age);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", createTime=").append(createTime);
+        sb.append(", sex='").append(sex).append('\'');
+        sb.append(", classs=").append(classs);
+        sb.append(", tuition=").append(tuition);
+        sb.append(", hobby='").append(hobby).append('\'');
+        sb.append(", hobbyCode='").append(hobbyCode).append('\'');
+        sb.append(", introduce='").append(introduce).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

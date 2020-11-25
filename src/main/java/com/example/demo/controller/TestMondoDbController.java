@@ -5,14 +5,14 @@ import java.util.Date;
 
 import com.example.demo.dao.MongoDao;
 import com.example.demo.entity.MongoTest;
-import com.example.demo.server.StudentServer;
+import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName TestMondoDB
@@ -26,7 +26,7 @@ public class TestMondoDbController {
     @Autowired
     private MongoDao mongoDao;
     @Autowired
-    private StudentServer studentServer;
+    private StudentService studentService;
     @GetMapping(value = "/save")
     public String saveTest() throws Exception {
         List<MongoTest> list =new ArrayList<>();
@@ -100,6 +100,14 @@ public class TestMondoDbController {
     }
     @GetMapping(value = "/down/{id}")
     public void downLoadStudent(Integer id, HttpServletResponse response){
-        studentServer.down(id,response);
+        studentService.down(id,response);
+    }
+
+
+    @GetMapping(value = "/getMap")
+    public String getMap(Integer id){
+        Map<Integer, MongoTest> integerMongoTestMap = studentService.fingMap();
+        System.out.println(integerMongoTestMap.get(id).getName());
+        return integerMongoTestMap.get(id).toString();
     }
 }
