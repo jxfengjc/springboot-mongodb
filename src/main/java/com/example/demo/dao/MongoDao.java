@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 /**
  * @ClassName MongoDao
@@ -25,10 +27,14 @@ public class MongoDao {
 
     /**
      * 创建对象
-     * @param mongoTest
+     * @param list
      */
-    public void saveTest(MongoTest mongoTest){
-        mongoTemplate.save(mongoTest,"student");
+    public void saveTest(List<MongoTest> list){
+        //insert 和save的区别
+        //insert 若新增的主键已经存在则会抛出异常，save会修改当前存在的数据
+        //insert 可以一次性插入整个列表，而不用遍历操作，效率高，save则时循环插入
+      //  mongoTemplate.save(mongoTest,"student");
+        mongoTemplate.insert(list,"student");
     }
 
     /**
@@ -40,6 +46,22 @@ public class MongoDao {
 
         Query query =new Query(Criteria.where("name").is(name));
         MongoTest mongoTest =   mongoTemplate.findOne(query,MongoTest.class,"student");
+        return mongoTest;
+    }
+    /**
+     * 根据用户id查询对象
+     * @param id
+     * @return
+     */
+    public List<MongoTest> findTestById(Integer id){
+
+        Query query =new Query();
+        Criteria criteria =new Criteria();
+        if(id !=null){
+            criteria.and("id").is(id);
+        }
+        query.addCriteria(criteria);
+        List<MongoTest> mongoTest =   mongoTemplate.find(query,MongoTest.class,"student");
         return mongoTest;
     }
 
