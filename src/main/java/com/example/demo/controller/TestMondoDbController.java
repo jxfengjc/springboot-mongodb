@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.example.demo.dao.MongoDao;
+import com.example.demo.dao.MongoTestDao;
 import com.example.demo.entity.MongoTest;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class TestMondoDbController {
     private MongoDao mongoDao;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private MongoTestDao mongoTestDao;
     @GetMapping(value = "/save")
     public String saveTest() throws Exception {
         List<MongoTest> list =new ArrayList<>();
@@ -109,5 +112,36 @@ public class TestMondoDbController {
         Map<Integer, MongoTest> integerMongoTestMap = studentService.fingMap();
         System.out.println(integerMongoTestMap.get(id).getName());
         return integerMongoTestMap.get(id).toString();
+    }
+    @GetMapping(value = "/getLike")
+    public String getByLike(String name){
+      return mongoTestDao.getByLikeName(name).toString();
+    }
+    @GetMapping(value = "/getname")
+    public String getByName(String name){
+        return mongoTestDao.getByIsName(name).toString();
+    }
+    @GetMapping(value = "/getBetween")
+    public String getBetween(Integer startAge,Integer endAge){
+        return mongoTestDao.getBetween(startAge,endAge).toString();
+    }
+
+    @GetMapping(value = "/getCount")
+    public long getCount(){
+        return mongoTestDao.getCount();
+    }
+    @GetMapping(value = "/getIn")
+    public String getIn(){
+        return mongoTestDao.getIn().toString();
+    }
+    @GetMapping(value = "/updateOne")
+    public String updateOne(Integer id,String name){
+        mongoTestDao.updateOne(id,name);
+        return "update success";
+    }
+    @GetMapping(value = "/getPage")
+    public String  getAppPortDetailByPage(int pageNo, int pageSize, String order, String sortBy, String name, String hobby){
+        Map<String, Object> appPortDetailByPage = mongoTestDao.getAppPortDetailByPage(pageNo, pageSize, order, sortBy, name, hobby);
+        return appPortDetailByPage.toString();
     }
 }
